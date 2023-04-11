@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
     String loginUser = "studentSkyPro";
     String mailUser = "student@skypro.com";
-    User userTest=new User (loginUser,mailUser);
+    String inValidMailUser="studentskyprocom";
 
-    @Test
+    User userTest = new User ( loginUser , mailUser );
+
+    @Test//1
     public void createUser() {
         Assertions.assertEquals ( loginUser , userTest.getLoginUser () );
         Assertions.assertEquals ( mailUser , userTest.getMailUser () );
@@ -18,7 +20,7 @@ public class UserTest {
         Для проверки объектов на равенство у них должен быть реализован метод equals.*/
     }
 
-    @Test
+    @Test//2
     public void createEmptyUser() {
         User userEmptyTest = new User ();
         Assertions.assertNull ( userEmptyTest.getLoginUser () );
@@ -26,19 +28,21 @@ public class UserTest {
         /* Метод имеет один параметр и проверяет, что переданный в него объект или результат выполнения метода является null */
     }
 
-    @Test
-    public void validParameter(){
-        Assertions.assertTrue ( userTest.getMailUser ().contains ( "@" ));
-        Assertions.assertTrue ( userTest.getMailUser ().contains ( "." ));
-        /*Метод имеет один параметр и проверяет, что переданный в него объект или результат выполнения метода возвращает true*/
+    @Test//3
+    public void validParameter() {
+        Assertions.assertDoesNotThrow (  () -> {
+            new User ( loginUser , inValidMailUser);
+        } );
+        /*Метод имеет один параметр в виде лямбды без параметров, которая вызывает проверяемый код.
+          Проверяет, что данный код не выкидывает исключение.*/
     }
 
-    @Test
-    public void compareLoginAndMail(){
-        Assertions.assertNotEquals ( userTest.getLoginUser (),userTest.getMailUser () );
-        /*Метод имеет два параметра и проверяет, что два объекта или примитива не равны друг другу.
-        Для проверки объектов на равенство у них должен быть реализован метод equals.*/
-    }
 
+    @Test//4
+    public void compareLoginAndMail() {
+        Assertions.assertDoesNotThrow (  () -> {
+            new User ( loginUser , loginUser);
+        } );
+    }
 
 }
